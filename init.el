@@ -416,6 +416,20 @@ you should place your code here."
   (fcitx-prefix-keys-add "SPC" "M-m") ; M-m is common in Spacemacs
   (setq fcitx-use-dbus t) ; uncomment if you're using Linux
 
+  (require 'timeclock)
+  (spaceline-define-segment timeclock
+    "The timeclock status."
+    (when (boundp 'timeclock-last-event)
+      (let* ((ev timeclock-last-event)
+             (code (car ev))
+             (proj (nth 2 ev)))
+        (when (equal code "i")
+          (format "%s" proj)
+          ))))
+  (spaceline-spacemacs-theme
+   '((timeclock :when active))
+   )
+
   ;; evil-hybrid-state-map, insert mode in hybrid configuration
   (define-key evil-hybrid-state-map (kbd "C-u") 'backward-kill-sentence)
   (define-key evil-hybrid-state-map (kbd "C-w") 'backward-kill-word)
