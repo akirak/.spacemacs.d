@@ -47,7 +47,8 @@
       (message "not in image-mode")
     (progn
       (unless (boundp 'optimized-image-file)
-        (my-optimize-buffer-image))
+        (my-optimize-buffer-image)
+        (sleep-for 1.5))
       (my/gs-publish-image-file optimized-image-file))))
 
 (provide 'my-image)
