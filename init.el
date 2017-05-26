@@ -455,6 +455,7 @@ you should place your code here."
   (spacemacs/declare-prefix "+" "create")
   (spacemacs/set-leader-keys "+p" 'akirak/scaffold-project)
   (spacemacs/set-leader-keys "+b" 'hugo-new-post)
+  (spacemacs/set-leader-keys "+o" 'helm-org-capture-templates)
 
   ;; evil-window-map: C-w in normal mode
   (require 'my-scratch)
