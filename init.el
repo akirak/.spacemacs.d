@@ -436,8 +436,6 @@ you should place your code here."
   (spacemacs/declare-prefix "o" "user-defined") ; Use SPC o as a prefix
   (spacemacs/set-leader-keys "`" 'spacemacs/workspaces-transient-state/body)
   (spacemacs/set-leader-keys "=" 'helm-show-kill-ring)
-  (spacemacs/set-leader-keys "]" 'helm-org-agenda-files-headings)
-  (spacemacs/set-leader-keys "}" 'helm-multi-swoop-org)
   (spacemacs/declare-prefix "+" "create")
   (spacemacs/set-leader-keys "+p" 'akirak/scaffold-project)
   (spacemacs/set-leader-keys "+b" 'hugo-new-post)
