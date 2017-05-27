@@ -9,7 +9,7 @@
            (not (seq-empty-p akirak/haskell-stack-template-list)))
       akirak/haskell-stack-template-list
     (progn (message "Obtaining a list of stack templates...")
-           (setq akirak/haskell-stack-template-list (cdr (process-lines "stack" "templates"))))))
+           (setq akirak/haskell-stack-template-list (cdr (process-lines "stack" "--no-docker" "templates"))))))
 
 (defun akirak/haskell-stack-choose-template ()
   (let ((inp (helm :sources
