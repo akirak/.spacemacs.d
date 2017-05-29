@@ -441,6 +441,44 @@ you should place your code here."
   (define-key evil-normal-state-map "m" 'point-to-register)
   (define-key evil-normal-state-map "'" 'jump-to-register)
 
+  (defun my/descendant-directories (root)
+    (cl-loop for f in (directory-files-recursively root "^[^.]" t)
+             when (file-directory-p f)
+             unless (string-match-p "\/\.git\/" f)
+             collect f))
+
+  (defun my/create-file-in-org-directory ()
+    (interactive)
+    (let* ((root "~/org")
+           (title (read-from-minibuffer "Enter a title of the new file: "))
+           (directory
+            (helm
+             :prompt (format "Choose a directory '%s': " title)
+             :sources
+             (helm-build-sync-source (format "Directories in %s" root)
+               :candidates (cl-sort
+                            (cons root
+                                  (cl-loop for f in (my/descendant-directories root)
+                                           unless (string-match-p "org\/\\(archives\\|mess\\)" f)
+                                           collect (abbreviate-file-name f)))
+                            'string<))))
+           (filename (read-from-minibuffer (format "Enter a file name in %s for '%s': " directory title)))
+           (absolute-filename
+            (concat (expand-file-name filename directory)
+                    (pcase (file-name-extension filename)
+                      (`nil ".org")
+                      (s ""))))
+           (buf (create-file-buffer absolute-filename))
+           )
+      (with-current-buffer buf
+        (pcase (file-name-extension absolute-filename)
+          ("org" (progn (org-mode)
+                        (insert (format "#+TITLE: %s\n" title))))
+          (_ "")
+          ))
+      (switch-to-buffer buf)
+      ))
+
   ;; keybindings under Spacemacs SPC
   (spacemacs/declare-prefix "o" "user-defined") ; Use SPC o as a prefix
   (spacemacs/set-leader-keys "`" 'spacemacs/workspaces-transient-state/body)
@@ -449,6 +487,7 @@ you should place your code here."
   (spacemacs/set-leader-keys "+p" 'akirak/scaffold-project)
   (spacemacs/set-leader-keys "+b" 'hugo-new-post)
   (spacemacs/set-leader-keys "+o" 'helm-org-capture-templates)
+  (spacemacs/set-leader-keys "+O" 'my/create-file-in-org-directory)
 
   ;; evil-window-map: C-w in normal mode
   (require 'my-scratch)
