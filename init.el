@@ -75,6 +75,7 @@ values."
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      spell-checking
+     bibtex
      ;; syntax-checking
      ;; version-control
      )
@@ -409,6 +410,14 @@ you should place your code here."
   (setq my-image-editor-program "pinta")
   (setq my/image-publish-gs-site "jingsi-blog-assets")
   (setq my/image-publish-default-gs-path "/screenshots/")
+
+  (setq org-ref-default-bibliography '("~/Dropbox/Bibliography/citations.bib")
+        org-ref-pdf-directory "~/Dropbox/Bibliography/pdf/"
+        org-ref-bibliography-notes "~/Dropbox/Bibliography/notes.org")
+
+  (setq org-ref-open-pdf-function
+        (lambda (fpath)
+          (start-process "zathura" "*helm-bibtex-zathura*" "/usr/bin/zathura" fpath)))
 
   ;; fcitx package
   (setq fcitx-active-evil-states '(insert emacs hybrid)) ; if you use hybrid mode
