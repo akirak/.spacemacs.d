@@ -68,6 +68,7 @@ values."
      shell
      imenu-list
      ansible
+     python
      github
      (chinese :variables chinese-enable-fcitx t)
      (ibuffer :variables ibuffer-group-buffers-by 'projects)
