@@ -421,7 +421,7 @@ you should place your code here."
 
   ;; fcitx package
   (setq fcitx-active-evil-states '(insert emacs hybrid)) ; if you use hybrid mode
-  (fcitx-aggressive-setup)
+  (fcitx-default-setup)
   (fcitx-prefix-keys-add "SPC" "M-m") ; M-m is common in Spacemacs
   (setq fcitx-use-dbus t) ; uncomment if you're using Linux
 
