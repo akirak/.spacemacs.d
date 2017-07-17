@@ -469,16 +469,14 @@ you should place your code here."
                     (pcase (file-name-extension filename)
                       (`nil ".org")
                       (s ""))))
-           (buf (create-file-buffer absolute-filename))
            )
-      (with-current-buffer buf
-        (pcase (file-name-extension absolute-filename)
-          ("org" (progn (org-mode)
-                        (insert (format "#+TITLE: %s\n" title))))
-          (_ "")
-          ))
-      (switch-to-buffer buf)
-      ))
+      (find-file absolute-filename)
+      (pcase (file-name-extension absolute-filename)
+        ("org" (progn (org-mode)
+                      (insert (format "#+TITLE: %s\n" title))))
+        (_ "")
+        ))
+      )
 
   ;; keybindings under Spacemacs SPC
   (spacemacs/declare-prefix "o" "user-defined") ; Use SPC o as a prefix
