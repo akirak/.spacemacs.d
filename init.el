@@ -77,6 +77,7 @@ values."
      ;;        shell-default-position 'bottom)
      spell-checking
      bibtex
+     hugo
      ;; syntax-checking
      ;; version-control
      )
@@ -388,9 +389,6 @@ you should place your code here."
 
   (require 'my-org-to-markdown)
   (setq org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0_10.jar")
-
-  (require 'my-hugo)
-  (setq hugo-project-directory "~/blog")
 
   ;; set a description before creating a gist
   (setq gist-ask-for-description t)

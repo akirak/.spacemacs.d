@@ -12,23 +12,22 @@
         (let ((s (car output)))
           (if (string-match "^\\(.+\\) created$" s)
               (match-string 1 s)
-            (:error output)))
-      (:error "empty output from hugo new"))))
+            (error output)))
+      (error "empty output from hugo new"))))
 
 (defun hugo-create-and-edit-content (path &optional title)
   (let ((command-result (hugo-create-content path)))
-    (if (stringp command-result)
-        (progn
-         (find-file command-result)
+    (progn
+      (find-file command-result)
          ;;; replace the title
-         (if title
-             (progn
-               (goto-char (point-min))
-               (search-forward-regexp "^title:.*$")
-               (replace-match (concat "title: " title))))
-         (end-of-buffer)
-         command-result)
-        (message (cdr command-result)))))
+      (if title
+          (progn
+            (goto-char (point-min))
+            (search-forward-regexp "^title:.*$")
+            (replace-match (concat "title: " title))))
+      (end-of-buffer)
+      command-result)
+    ))
 
 (defun hugo-build-filename-from-title (title)
   (lexical-let
@@ -61,8 +60,6 @@
       (if (listp output)
           (message (concat "Post undrafted: " (car output)))))))
 
-(setq hugo-server-buffer-name "*hugo-server*")
-
 (defun hugo-get-server-process ()
   (let ((proc (get-buffer-process hugo-server-buffer-name)))
     (if (and proc (process-live-p proc))
@@ -92,5 +89,3 @@
           (interrupt-process proc)
           (message "Stopped Hugo server"))
       (message "Hugo server is not running"))))
-
-(provide 'my-hugo)
