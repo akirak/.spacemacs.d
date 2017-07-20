@@ -57,7 +57,7 @@ values."
                       better-defaults-move-to-end-of-code-first nil)
      emacs-lisp
      graphviz
-     deft
+     deft-extras
      chrome
      git
      vagrant
@@ -373,11 +373,6 @@ you should place your code here."
   (setq deft-directory my-org-directory)
   (setq deft-extensions '("org" "md" "txt"))
   (setq deft-default-extension "org")
-  (setq deft-recursive t)
-  (setq deft-use-filename-as-title nil)
-  (setq deft-use-filter-string-for-filename t)
-  (require 'my-deft-title)
-  (advice-add 'deft-parse-title :around #'my-deft/parse-title-with-directory-prepended)
   (setq deft-file-naming-rules '((nospace . "-")))
 
   (setq timeclock-file "~/Dropbox/Apps/timeclock.txt")
