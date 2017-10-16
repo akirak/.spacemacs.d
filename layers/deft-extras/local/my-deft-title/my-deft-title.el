@@ -31,4 +31,25 @@
                (car (split-string (substring str 4) "\n---\n")))
             (apply orig args)))))))
 
+(defun my-deft/parse-title (filename contents)
+  (concat
+   (my-deft/title-prefix-from-file-name filename)
+   (let ((nondir (file-name-nondirectory filename)))
+     (cond
+      ;; If the filename is README.* or *.txt, return the file name as it is
+      ((or (string-prefix-p "README" nondir)
+           (string-suffix-p ".txt" filename))
+       nondir)
+      ;; If the content contains a YAML front matter, extract title from it
+      ((string-prefix-p "---\n" contents)
+       (my-deft/parse-title-from-front-matter-data
+        (car (split-string (substring contents 4) "\n---\n"))))
+      (t
+       (let ((begin (string-match "^.+$" contents)))
+         (if begin
+             (deft-strip-title
+               (substring contents begin (match-end 0)))
+           nondir))
+      )))))
+
 (provide 'my-deft-title)

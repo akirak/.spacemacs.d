@@ -7,5 +7,5 @@
   (use-package my-deft-title))
 
 (defun deft-extras/post-init-my-deft-title ()
-  (advice-add 'deft-parse-title :around #'my-deft/parse-title-with-directory-prepended)
+  (advice-add 'deft-parse-title :override #'my-deft/parse-title)
   )
