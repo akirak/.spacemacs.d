@@ -496,6 +496,11 @@ you should place your code here."
   ;; other normal mode keybindings
   (global-set-key (kbd "<S-f11>") 'writeroom-mode) ; distraction-free mode
 
+  (defun my/suspend ()
+    (interactive)
+    (evil-write-all nil)
+    (shell-command "systemctl suspend"))
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
