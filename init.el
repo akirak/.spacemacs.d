@@ -71,7 +71,8 @@ values."
      terraform
      python
      github
-     (chinese :variables chinese-enable-fcitx t)
+     ;; Temporarily disabled to prevent the issue in https://github.com/syl20bnr/spacemacs/issues/8441
+     ;; (chinese :variables chinese-enable-fcitx t)
      (ibuffer :variables ibuffer-group-buffers-by 'projects)
      ;; (shell :variables
      ;;        shell-default-height 30
@@ -419,11 +420,12 @@ you should place your code here."
         (lambda (fpath)
           (start-process "zathura" "*helm-bibtex-zathura*" "/usr/bin/zathura" fpath)))
 
-  ;; fcitx package
-  (setq fcitx-active-evil-states '(insert emacs hybrid)) ; if you use hybrid mode
-  (fcitx-default-setup)
-  (fcitx-prefix-keys-add "SPC" "M-m") ; M-m is common in Spacemacs
-  (setq fcitx-use-dbus t) ; uncomment if you're using Linux
+  ;; temporarily disabled. See https://github.com/syl20bnr/spacemacs/issues/8441
+  ;; ;; fcitx package
+  ;; (setq fcitx-active-evil-states '(insert emacs hybrid)) ; if you use hybrid mode
+  ;; (fcitx-default-setup)
+  ;; (fcitx-prefix-keys-add "SPC" "M-m") ; M-m is common in Spacemacs
+  ;; (setq fcitx-use-dbus t) ; uncomment if you're using Linux
 
   ;; evil-hybrid-state-map, insert mode in hybrid configuration
   (define-key evil-hybrid-state-map (kbd "C-u") 'backward-kill-sentence)
