@@ -497,8 +497,6 @@ you should place your code here."
   ;; evil-window-map: C-w in normal mode
   (require 'my-scratch)
   (require 'my-window-functions)
-  (define-key evil-window-map "n" 'my/window-new-same-mode)
-  (define-key evil-window-map (kbd "C-n") 'my/window-new-with-name)
   (define-key evil-window-map (kbd "T") 'my/new-workspace-with-current-window)
   (define-key evil-window-map (kbd "q") 'my/close-window-or-workspace)
 
