@@ -31,58 +31,63 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     sql
-     javascript
-     python
+
+     ;; Checkers
+     spell-checking
+     syntax-checking
+
+     ;; Completion
+     auto-completion
+     helm
+
+     ;; Emacs
+     (better-defaults :variables
+                      better-defaults-move-to-beginning-of-code-first t
+                      better-defaults-move-to-end-of-code-first nil)
+     (ibuffer :variables ibuffer-group-buffers-by 'projects)
+     (org :variables
+          org-enable-reveal-js-support t
+          org-enable-github-support t)
+
+     ;; Frameworks
+
+     ;; International support
+     ;; Temporarily disabled to prevent the issue in https://github.com/syl20bnr/spacemacs/issues/8441
+     ;; (chinese :variables chinese-enable-fcitx t)
+
+     ;; Programming languages
+     bibtex
      csv
-     rust
-     ;; javascript
-     markdown
-     ;; haskell
-     yaml
+     emacs-lisp
+     graphviz
      html
+     javascript
+     markdown
+     python
+     rust
+     shell
+     sql
+     yaml
      (haskell :variables
               haskell-completion-backend 'intero
               haskell-enable-hindent-style "johan-tibell"
               haskell-process-type 'stack-ghci)
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
-     helm
-     auto-completion
-     better-defaults
-     (better-defaults :variables
-                      better-defaults-move-to-beginning-of-code-first t
-                      better-defaults-move-to-end-of-code-first nil)
-     emacs-lisp
-     graphviz
-     deft-extras
-     chrome
+
+     ;; source control
      git
-     vagrant
-     ranger
-     (org :variables
-          org-enable-reveal-js-support t
-          org-enable-github-support t)
-     shell
-     imenu-list
-     ansible
-     terraform
-     python
      github
-     ;; Temporarily disabled to prevent the issue in https://github.com/syl20bnr/spacemacs/issues/8441
-     ;; (chinese :variables chinese-enable-fcitx t)
-     (ibuffer :variables ibuffer-group-buffers-by 'projects)
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
-     spell-checking
-     bibtex
+
+     ;; tools
+     ansible
+     chrome
+     imenu-list
+     ranger
+     terraform
+     vagrant
+
+     ;; custom
+     deft-extras
      hugo
-     syntax-checking
-     ;; version-control
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
