@@ -379,11 +379,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
                  '("Move to github working trees" . my/move-directory-to-github-work) t)
     )
 
-  (with-eval-after-load 'deft
-    (define-key deft-mode-map (kbd "C-p") 'widget-backward)
-    (define-key deft-mode-map (kbd "C-n") 'widget-forward)
-    )
-
   )
 
 (defun dotspacemacs/user-config ()
