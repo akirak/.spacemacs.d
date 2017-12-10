@@ -46,8 +46,20 @@ values."
                       better-defaults-move-to-end-of-code-first nil)
      (ibuffer :variables ibuffer-group-buffers-by 'projects)
      (org :variables
+          org-enable-github-support t
+          ;; org-reveal
           org-enable-reveal-js-support t
-          org-enable-github-support t)
+          ;; org-babel
+          org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0_10.jar"
+          ;; org-ref
+          org-ref-default-bibliography ("~/Dropbox/Bibliography/citations.bib")
+          org-ref-pdf-directory "~/Dropbox/Bibliography/pdf/"
+          org-ref-bibliography-notes "~/Dropbox/Bibliography/notes.org"
+          org-ref-open-pdf-function (lambda (fpath)
+                                      (start-process "zathura"
+                                                     "*helm-bibtex-zathura*"
+                                                     "/usr/bin/zathura" fpath))
+          )
 
      ;; Frameworks
      react
@@ -76,7 +88,8 @@ values."
 
      ;; source control
      git
-     github
+     (github :variables
+             gist-ask-for-description t)
 
      ;; tools
      ansible
@@ -87,9 +100,18 @@ values."
      vagrant
 
      ;; custom
-     deft-extras
+     (deft-extras :variables
+       deft-directory "~/org"
+       deft-extensions '("org" "md" "txt")
+       deft-default-extension "org"
+       deft-file-naming-rules '((nospace . "-"))
+       )
      hugo
-     akirak-web
+     (akirak-web :variables
+                 web-image-editor-program "pinta"
+                 image/google-cloud-storage-site "jingsi-blog-assets"
+                 image/google-cloud-storage-path "/screenshots/"
+      )
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -382,12 +404,6 @@ you should place your code here."
   (global-evil-visualstar-mode)
   (global-evil-surround-mode 1)
 
-  ;; deft layer configuration
-  (setq deft-directory my-org-directory)
-  (setq deft-extensions '("org" "md" "txt"))
-  (setq deft-default-extension "org")
-  (setq deft-file-naming-rules '((nospace . "-")))
-
   ;; org layer configuration
   (let ((org-init-file (concat my-org-elisp-directory "/configure-org.el")))
     (if (file-exists-p org-init-file)
@@ -396,11 +412,6 @@ you should place your code here."
 
   ;; Deprecated.
   ;; (require 'my-org-to-markdown)
-
-  (setq org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0_10.jar")
-
-  ;; set a description before creating a gist
-  (setq gist-ask-for-description t)
 
   (require 'my-scaffold)
   (require 'my-scaffold-haskell)
@@ -414,17 +425,6 @@ you should place your code here."
   (setq my/github-personal-login "akirak")
   (require 'my-worktrees)
   (require 'my-github)
-  (setq web-image-editor-program "pinta")
-  (setq image/google-cloud-storage-site "jingsi-blog-assets")
-  (setq image/google-cloud-storage-path "/screenshots/")
-
-  (setq org-ref-default-bibliography '("~/Dropbox/Bibliography/citations.bib")
-        org-ref-pdf-directory "~/Dropbox/Bibliography/pdf/"
-        org-ref-bibliography-notes "~/Dropbox/Bibliography/notes.org")
-
-  (setq org-ref-open-pdf-function
-        (lambda (fpath)
-          (start-process "zathura" "*helm-bibtex-zathura*" "/usr/bin/zathura" fpath)))
 
   ;; temporarily disabled. See https://github.com/syl20bnr/spacemacs/issues/8441
   ;; ;; fcitx package
