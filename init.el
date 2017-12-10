@@ -107,6 +107,7 @@ values."
        deft-file-naming-rules '((nospace . "-"))
        )
      hugo
+     org2blog
      (akirak-web :variables
                  web-image-editor-program "pinta"
                  image/google-cloud-storage-site "jingsi-blog-assets"
@@ -121,7 +122,6 @@ values."
    dotspacemacs-additional-packages '(writeroom-mode
                                       solarized-theme
                                       browse-at-remote
-                                      org2blog
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
