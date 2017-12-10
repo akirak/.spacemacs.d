@@ -380,18 +380,11 @@ you should place your code here."
   (global-evil-visualstar-mode)
   (global-evil-surround-mode 1)
 
-  ;; magithub
-  ;; (use-package magithub
-  ;;   :after magit
-  ;;   :config (magithub-feature-autoinject t))
-
   ;; deft layer configuration
   (setq deft-directory my-org-directory)
   (setq deft-extensions '("org" "md" "txt"))
   (setq deft-default-extension "org")
   (setq deft-file-naming-rules '((nospace . "-")))
-
-  (setq timeclock-file "~/Dropbox/Apps/timeclock.txt")
 
   ;; org layer configuration
   (let ((org-init-file (concat my-org-elisp-directory "/configure-org.el")))
