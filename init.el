@@ -108,6 +108,7 @@ values."
        )
      hugo
      org2blog
+     akirak-emacs
      (akirak-web :variables
                  web-image-editor-program "pinta"
                  image/google-cloud-storage-site "jingsi-blog-assets"
@@ -119,7 +120,7 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    ;; dotspacemacs-additional-packages '(centered-window-mode)
-   dotspacemacs-additional-packages '(writeroom-mode
+   dotspacemacs-additional-packages '(
                                       solarized-theme
                                       browse-at-remote
                                       )
@@ -496,10 +497,9 @@ you should place your code here."
   (spacemacs/set-leader-keys "+O" 'my/create-file-in-org-directory)
 
   ;; evil-window-map: C-w in normal mode
-  (require 'my-scratch)
-  (require 'my-window-functions)
-  (define-key evil-window-map (kbd "T") 'my/new-workspace-with-current-window)
-  (define-key evil-window-map (kbd "q") 'my/close-window-or-workspace)
+  (define-key evil-window-map (kbd "t") 'eyebrowse-create-window-config)
+  (define-key evil-window-map (kbd "T") 'akirak/move-current-window-to-new-workspace)
+  (define-key evil-window-map (kbd "q") 'akirak/close-window-or-workspace)
 
   ;; other normal mode keybindings
   (global-set-key (kbd "<S-f11>") 'writeroom-mode) ; distraction-free mode
