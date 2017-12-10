@@ -394,7 +394,9 @@ you should place your code here."
         (load-file org-init-file)
       (error (concat org-init-file " does not exist!"))))
 
-  (require 'my-org-to-markdown)
+  ;; Deprecated.
+  ;; (require 'my-org-to-markdown)
+
   (setq org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0_10.jar")
 
   ;; set a description before creating a gist
