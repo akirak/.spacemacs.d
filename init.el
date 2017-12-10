@@ -504,6 +504,8 @@ you should place your code here."
   ;; other normal mode keybindings
   (global-set-key (kbd "<S-f11>") 'writeroom-mode) ; distraction-free mode
 
+  (global-set-key (kbd "C-c C-g") 'evil-escape)
+
   (defun my/suspend ()
     (interactive)
     (evil-write-all nil)
