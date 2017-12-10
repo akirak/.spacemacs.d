@@ -50,6 +50,7 @@ values."
           org-enable-github-support t)
 
      ;; Frameworks
+     react
 
      ;; International support
      ;; Temporarily disabled to prevent the issue in https://github.com/syl20bnr/spacemacs/issues/8441
