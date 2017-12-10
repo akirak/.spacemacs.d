@@ -89,6 +89,7 @@ values."
      ;; custom
      deft-extras
      hugo
+     akirak-web
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -411,10 +412,9 @@ you should place your code here."
   (setq my/github-personal-login "akirak")
   (require 'my-worktrees)
   (require 'my-github)
-  (require 'my-image)
-  (setq my-image-editor-program "pinta")
-  (setq my/image-publish-gs-site "jingsi-blog-assets")
-  (setq my/image-publish-default-gs-path "/screenshots/")
+  (setq web-image-editor-program "pinta")
+  (setq image/google-cloud-storage-site "jingsi-blog-assets")
+  (setq image/google-cloud-storage-path "/screenshots/")
 
   (setq org-ref-default-bibliography '("~/Dropbox/Bibliography/citations.bib")
         org-ref-pdf-directory "~/Dropbox/Bibliography/pdf/"
@@ -498,9 +498,6 @@ you should place your code here."
   (require 'my-window-functions)
   (define-key evil-window-map (kbd "T") 'my/new-workspace-with-current-window)
   (define-key evil-window-map (kbd "q") 'my/close-window-or-workspace)
-
-  (spacemacs/set-leader-keys-for-major-mode 'image-mode "e" 'my-image-editor)
-  (spacemacs/set-leader-keys-for-major-mode 'image-mode "p" 'my-optimize-buffer-image-and-publish)
 
   ;; other normal mode keybindings
   (global-set-key (kbd "<S-f11>") 'writeroom-mode) ; distraction-free mode
