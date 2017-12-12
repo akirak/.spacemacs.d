@@ -52,7 +52,7 @@ values."
           ;; org-babel
           org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0_10.jar"
           ;; org-ref
-          org-ref-default-bibliography ("~/Dropbox/Bibliography/citations.bib")
+          org-ref-default-bibliography '("~/Dropbox/Bibliography/citations.bib")
           org-ref-pdf-directory "~/Dropbox/Bibliography/pdf/"
           org-ref-bibliography-notes "~/Dropbox/Bibliography/notes.org"
           org-ref-open-pdf-function (lambda (fpath)
