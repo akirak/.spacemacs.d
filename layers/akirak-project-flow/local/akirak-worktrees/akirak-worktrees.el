@@ -20,4 +20,4 @@
       (projectile-add-known-project dest)
       )))
 
-(provide 'my-worktrees)
+(provide 'akirak-worktrees)

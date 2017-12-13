@@ -29,4 +29,4 @@ git status -sb
                                                 modified)))))
     (switch-to-buffer-other-window buf)))
 
-(provide 'my-scan-scratch)
+(provide 'scan-scratch)

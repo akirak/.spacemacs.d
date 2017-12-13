@@ -109,6 +109,34 @@ values."
      hugo
      org2blog
      akirak-emacs
+     (akirak-project-flow :variables
+                          project-init/parent-directories '(("~/scratch"
+                                                             :structure date)
+                                                            ("~/github/practice-ideas"
+                                                             :structure modifiable)
+                                                            ("~/work/github.com/akirak")
+                                                            )
+                          project-ns-namespaces '(
+                                                  ("~/work/github.com/akirak"
+                                                   :description
+                                                   "My personal repositories"
+                                                   :on-add akirak/add-github-remote-repository
+                                                   :remote-url-patterns
+                                                   '("git@github:akirak/%s.git"
+                                                     "git@github:akirak/%s"
+                                                     "https://github.com/akirak/%s.git"
+                                                     "https://github.com/akirak/%s")
+                                                   )
+                                                  ("~/work/keybase/akirak"
+                                                   :description
+                                                   "My repositories for sensitive/private information"
+                                                   :remote-url-patterns
+                                                   '("keybase://private/akirak/%s")
+                                                   )
+                                                  )
+                          my/work-trees-root "~/work"
+                          my/github-personal-login "akirak"
+                          )
      (akirak-web :variables
                  web-image-editor-program "pinta"
                  image/google-cloud-storage-site "jingsi-blog-assets"
@@ -373,12 +401,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (define-key helm-map (kbd "C-w") 'backward-kill-word)
     (define-key helm-map (kbd "C-k") 'kill-line))
 
-  (with-eval-after-load 'helm-projectile
-    (require 'my-worktrees)
-    (add-to-list 'helm-source-projectile-projects-actions
-                 '("Move to github working trees" . my/move-directory-to-github-work) t)
-    )
-
   )
 
 (defun dotspacemacs/user-config ()
@@ -408,19 +430,6 @@ you should place your code here."
 
   ;; Deprecated.
   ;; (require 'my-org-to-markdown)
-
-  (require 'my-scaffold)
-  (require 'my-scaffold-haskell)
-  (setq akirak/project-scaffolder-alist
-        '(("stack (Haskell)" . akirak/scaffold-get-haskell-stack-command)
-          ("npm (JavaScript etc.)" . (:command-in-directory . "npm init -y"))
-          ("plain" . t)))
-  (require 'my-scan-scratch)
-
-  (setq my/work-trees-root "~/work")
-  (setq my/github-personal-login "akirak")
-  (require 'my-worktrees)
-  (require 'my-github)
 
   ;; temporarily disabled. See https://github.com/syl20bnr/spacemacs/issues/8441
   ;; ;; fcitx package

@@ -45,4 +45,4 @@
       (when (f-directory-p dir)
         (my-github/ensure-remote dir)))))
 
-(provide 'my-github)
+(provide 'akirak-github)
