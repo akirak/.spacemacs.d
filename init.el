@@ -142,6 +142,7 @@ values."
                  image/google-cloud-storage-site "jingsi-blog-assets"
                  image/google-cloud-storage-path "/screenshots/"
       )
+     akirak-org
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -397,11 +398,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (when (file-exists-p my-org-elisp-directory)
     (add-to-list 'load-path my-org-elisp-directory))
 
-  (with-eval-after-load 'helm
-    (define-key helm-map (kbd "C-u") 'backward-kill-sentence)
-    (define-key helm-map (kbd "C-w") 'backward-kill-word)
-    (define-key helm-map (kbd "C-k") 'kill-line))
-
   )
 
 (defun dotspacemacs/user-config ()
@@ -423,6 +419,9 @@ you should place your code here."
   (global-evil-visualstar-mode)
   (global-evil-surround-mode 1)
 
+  ;; Load keybindings generated from an Org file
+  (load-file (expand-file-name "keybindings.el" dotspacemacs-directory))
+
   ;; org layer configuration
   (let ((org-init-file (concat my-org-elisp-directory "/configure-org.el")))
     (if (file-exists-p org-init-file)
@@ -438,42 +437,6 @@ you should place your code here."
   ;; (fcitx-default-setup)
   ;; (fcitx-prefix-keys-add "SPC" "M-m") ; M-m is common in Spacemacs
   ;; (setq fcitx-use-dbus t) ; uncomment if you're using Linux
-
-  ;; evil-hybrid-state-map, insert mode in hybrid configuration
-  (define-key evil-hybrid-state-map (kbd "C-u") 'backward-kill-sentence)
-  (define-key evil-hybrid-state-map (kbd "C-w") 'backward-kill-word)
-  (define-key evil-hybrid-state-map (kbd "C-h") 'evil-backward-char)
-  (define-key evil-hybrid-state-map (kbd "C-o") 'evil-execute-in-normal-state)
-
-  ;; minibuffer-local-map
-  (define-key minibuffer-local-map (kbd "C-u") 'backward-kill-sentence)
-  (define-key minibuffer-local-map (kbd "C-w") 'backward-kill-word)
-  (define-key minibuffer-local-map (kbd "C-h")
-    (lambda () (interactive) (delete-char -1)))
-
-  ;; evil-normal-state-map
-  (define-key evil-normal-state-map "m" 'point-to-register)
-  (define-key evil-normal-state-map "'" 'jump-to-register)
-
-  ;; keybindings under Spacemacs SPC
-  (spacemacs/declare-prefix "o" "user-defined") ; Use SPC o as a prefix
-  (spacemacs/set-leader-keys "`" 'spacemacs/workspaces-transient-state/body)
-  (spacemacs/set-leader-keys "=" 'helm-show-kill-ring)
-  (spacemacs/declare-prefix "+" "create")
-  (spacemacs/set-leader-keys "+p" 'akirak/scaffold-project)
-  (spacemacs/set-leader-keys "+b" 'hugo-new-post)
-  (spacemacs/set-leader-keys "+o" 'helm-org-capture-templates)
-  (spacemacs/set-leader-keys "+O" 'my/create-file-in-org-directory)
-
-  ;; evil-window-map: C-w in normal mode
-  (define-key evil-window-map (kbd "t") 'eyebrowse-create-window-config)
-  (define-key evil-window-map (kbd "T") 'akirak/move-current-window-to-new-workspace)
-  (define-key evil-window-map (kbd "q") 'akirak/close-window-or-workspace)
-
-  ;; other normal mode keybindings
-  (global-set-key (kbd "<S-f11>") 'writeroom-mode) ; distraction-free mode
-
-  (global-set-key (kbd "C-c C-g") 'evil-escape)
 
   (defun my/suspend ()
     (interactive)

@@ -1,0 +1,59 @@
+#+title: Custom Keybindings
+
+* Global keybindings
+** Escape from anywhere
+   #+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-c C-g") 'evil-escape)
+   #+END_SRC
+** Writeroom distraction-free mode
+   #+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "<S-f11>") 'writeroom-mode)
+   #+END_SRC
+
+* ~SPC o~ for global bindings
+  ~SPC o~ is reserved for the user and guaranteed to be free. I will use it for custom *global* keybindings:
+  #+BEGIN_SRC emacs-lisp
+    (spacemacs/declare-prefix "o" "user-defined")
+  #+END_SRC
+  You can use the prefix for defining further keybindings, e.g.:
+  #+BEGIN_SRC emacs-lisp :tangle no
+    (spacemacs/set-leader-keys "of" 'forward-char) 
+  #+END_SRC
+
+* ~SPC m o~ for mode-specific bindings
+  Likewise, ~SPC m o~ is reserved for the user and guaranteed to be free. I will use it for custom *mode-specific* keybindings. 
+  To define and use a prefix key for a major mode, see the following example:
+  #+BEGIN_SRC emacs-lisp :tangle no
+    (spacemacs/declare-prefix-for-mode 'org-mode "o" "user-defined")
+    (spacemacs/set-leader-keys-for-major-mode 'org-mode "oc" 'org-cycle)
+  #+END_SRC
+
+* Additional bindings in reserved maps
+** C-w: Manipulate windows
+   #+BEGIN_SRC emacs-lisp
+   (define-key evil-window-map (kbd "t") 'eyebrowse-create-window-config)
+   (define-key evil-window-map (kbd "T") 'akirak/move-current-window-to-new-workspace)
+   (define-key evil-window-map (kbd "q") 'akirak/close-window-or-workspace)
+   #+END_SRC
+
+* Workarounds
+** evil-hybrid-state-map
+ #+BEGIN_SRC emacs-lisp
+   (define-key evil-hybrid-state-map (kbd "C-u") 'backward-kill-sentence)
+   (define-key evil-hybrid-state-map (kbd "C-w") 'backward-kill-word)
+   (define-key evil-hybrid-state-map (kbd "C-h") 'evil-backward-char)
+   (define-key evil-hybrid-state-map (kbd "C-o") 'evil-execute-in-normal-state)
+ #+END_SRC
+** helm-map
+   #+BEGIN_SRC emacs-lisp
+     (with-eval-after-load 'helm
+       (define-key helm-map (kbd "C-u") 'backward-kill-sentence)
+       (define-key helm-map (kbd "C-w") 'backward-kill-word)
+       (define-key helm-map (kbd "C-k") 'kill-line))
+   #+END_SRC
+** minibuffer-local-map
+   #+BEGIN_SRC emacs-lisp
+     (define-key minibuffer-local-map (kbd "C-u") 'backward-kill-sentence)
+     (define-key minibuffer-local-map (kbd "C-w") 'backward-kill-word)
+     (define-key minibuffer-local-map (kbd "C-h") (lambda () (interactive) (delete-char -1)))
+   #+END_SRC
