@@ -120,7 +120,7 @@ values."
                                                   ("~/work/github.com/akirak"
                                                    :description
                                                    "My personal repositories"
-                                                   :on-add akirak/add-github-remote-repository
+                                                   :on-add (add-remote)
                                                    :remote-url-patterns
                                                    '("git@github:akirak/%s.git"
                                                      "git@github:akirak/%s"

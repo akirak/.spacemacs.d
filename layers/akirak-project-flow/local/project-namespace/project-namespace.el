@@ -38,7 +38,8 @@ For other options, see the description of project-ns-namespace variable. "
   (when (f-ancestor-of? (f-canonical dest-parent) (f-canonical src))
     (error (format "%s is already inside %s" src dest-parent)))
   ;; Read the destination path from the mini-buffer
-  (let ((dest (project-ns//read-name-in-directory dest-parent (f-filename src))))
+  (let* ((name (f-filename src))
+         (dest (project-ns//read-name-in-directory dest-parent name)))
     (project-ns//move-project-directory (directory-file-name src) dest)
     ;; Run on-add action depending on its value
     (pcase on-add
@@ -46,7 +47,39 @@ For other options, see the description of project-ns-namespace variable. "
       ((pred fboundp) (funcall on-add dest))
       ;; A lambda expression
       (`(lambda . ,_) (funcall on-add dest))
+      ;; List
+      ((pred listp) (cl-loop for op in on-add
+                             do (pcase op
+                                  ('create (funcall create-remote name))
+                                  ('add-remote (project-ns//add-remote-pattern dest
+                                                                               (car remote-url-patterns)))
+                                  ((pred symbolp) (error (format "unsupported operation %s"
+                                                                 (symbol-name op))))
+                                  )))
       )))
+
+(defun project-ns//add-remote-pattern (dir remote-url-pattern)
+  (unless remote-url-pattern
+    (error "remote-url-patterns is empty"))
+  (let ((name (f-filename dir))
+        (default-directory dir))
+    (if (git-remote? "origin")
+        (error (format "Repository %s already has origin" dir))
+      (let ((url (project-ns//expand-url-pattern remote-url-pattern
+                                                 name)))
+        (when (yes-or-no-p "Add %s as origin?")
+          (git-run "remote" "add" "origin" ))))))
+
+(defun project-ns//expand-url-pattern (remote-url-pattern name)
+  (format remote-url-pattern name))
+
+(defun project-ns//match-url-pattern (remote-url-pattern url)
+  (let ((regex (s-replace (regexp-quote remote-url-pattern)
+                          "%s"
+                          (error "not implemented") ;FIXME: 
+                          ))))
+  (pcase (s-match regex url)
+    (`(,_ ,name) name)))
 
 (defcustom project-ns-namespaces nil
   "A list of namespace configurations for project-namespace.
@@ -61,6 +94,12 @@ The property list has the following options:
 This property specifies an action to run after a directory/repository is added to the namespace.
 It can be used to help you with operations like creating a repository on a server and adding it as a remote.
 Note that this function/expression is not run after a remote repository is cloned to your local machine. It is run only after a directory is moved into this namespace. 
+:on-add property can be one of the following types of value:
+- A symbol to a function that takes the project path as an argument
+- A lambda expression that takes the project path as an argument
+- A list of symbols. Each element in this list can be one of the following values:
+  - create:       Create a remote repository using a function given as :create-remote function
+  - add-remote:   Add a remote repository using the first value of :remote-url-patterns property
 
 :remote-url-patterns
 This property may be used both for adding remote repositories and cloning. 
