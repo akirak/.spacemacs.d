@@ -45,21 +45,21 @@ values."
                       better-defaults-move-to-beginning-of-code-first t
                       better-defaults-move-to-end-of-code-first nil)
      (ibuffer :variables ibuffer-group-buffers-by 'projects)
-     (org :variables
-          org-enable-github-support t
-          ;; org-reveal
-          org-enable-reveal-js-support t
-          ;; org-babel
-          org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0_10.jar"
-          ;; org-ref
-          org-ref-default-bibliography '("~/Dropbox/Bibliography/citations.bib")
-          org-ref-pdf-directory "~/Dropbox/Bibliography/pdf/"
-          org-ref-bibliography-notes "~/Dropbox/Bibliography/notes.org"
-          org-ref-open-pdf-function (lambda (fpath)
-                                      (start-process "zathura"
-                                                     "*helm-bibtex-zathura*"
-                                                     "/usr/bin/zathura" fpath))
-          )
+     (akirak-org
+      :variables
+      ;; org-reveal
+      org-enable-reveal-js-support t
+      ;; org-babel
+      org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0_10.jar"
+      ;; org-ref
+      org-ref-default-bibliography '("~/Dropbox/Bibliography/citations.bib")
+      org-ref-pdf-directory "~/Dropbox/Bibliography/pdf/"
+      org-ref-bibliography-notes "~/Dropbox/Bibliography/notes.org"
+      org-ref-open-pdf-function (lambda (fpath)
+                                  (start-process "zathura"
+                                                 "*helm-bibtex-zathura*"
+                                                 "/usr/bin/zathura" fpath))
+      )
 
      ;; Frameworks
      react
@@ -142,7 +142,6 @@ values."
                  image/google-cloud-storage-site "jingsi-blog-assets"
                  image/google-cloud-storage-path "/screenshots/"
       )
-     akirak-org
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -151,7 +150,6 @@ values."
    ;; dotspacemacs-additional-packages '(centered-window-mode)
    dotspacemacs-additional-packages '(
                                       solarized-theme
-                                      browse-at-remote
                                       f
                                       )
    ;; A list of packages that cannot be updated.
@@ -390,14 +388,6 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
-  ;; load custom elisps from this directory
-  (add-to-list 'load-path (expand-file-name "elisp" dotspacemacs-directory))
-
-  (setq my-org-directory "~/org")
-  (setq my-org-elisp-directory (expand-file-name "elisp" my-org-directory))
-  (when (file-exists-p my-org-elisp-directory)
-    (add-to-list 'load-path my-org-elisp-directory))
-
   )
 
 (defun dotspacemacs/user-config ()
@@ -421,15 +411,6 @@ you should place your code here."
 
   ;; Load keybindings generated from an Org file
   (load-file (expand-file-name "keybindings.el" dotspacemacs-directory))
-
-  ;; org layer configuration
-  (let ((org-init-file (concat my-org-elisp-directory "/configure-org.el")))
-    (if (file-exists-p org-init-file)
-        (load-file org-init-file)
-      (error (concat org-init-file " does not exist!"))))
-
-  ;; Deprecated.
-  ;; (require 'my-org-to-markdown)
 
   ;; temporarily disabled. See https://github.com/syl20bnr/spacemacs/issues/8441
   ;; ;; fcitx package
