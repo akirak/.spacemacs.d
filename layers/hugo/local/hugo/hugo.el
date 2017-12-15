@@ -1,3 +1,9 @@
+(defconst hugo-server-buffer-name "*hugo-server*"
+  "The buffer name of a background hugo server.")
+
+(defcustom hugo-project-directory nil
+  "The directory of your Hugo blog.")
+
 (defun get-hugo-project-directory ()
   (if (and (boundp 'hugo-project-directory) (stringp hugo-project-directory))
       hugo-project-directory
@@ -36,6 +42,7 @@
                 (lambda (s) (replace-regexp-in-string "\s" "-" s)))))
     (reduce 'funcall funcs :from-end t :initial-value title)))
 
+;;;###autoload
 (defun hugo-new-post (&optional title)
   (interactive)
   (let* ((title (if title title (read-from-minibuffer "Title of the blog post: ")))
@@ -45,6 +52,7 @@
          (path (concat "post/" (file-name-sans-extension filename-from-user) ".md")))
     (hugo-create-and-edit-content path title)))
 
+;;;###autoload
 (defun hugo-undraft-projectile ()
   (interactive)
   (let* ((filename (file-truename (buffer-file-name)))
@@ -72,7 +80,9 @@
 ;; - separate start and stop functions
 ;; - no `-d dev' option, as I am using continuous integration to publish the site
 ;; - open the site when running the start function even if the server is already running
+;;;###autoload
 (defun hugo-server-start-projectile (&optional arg)
+  "Start a Hugo server for previewing the blog site."
   (interactive "P")
   (if (hugo-get-server-process)
       (message "Hugo server is already running")
@@ -81,6 +91,7 @@
       (message "Started Hugo server")))
   (unless arg (browse-url "http://localhost:1313/")))
 
+;;;###autoload
 (defun hugo-server-stop ()
   (interactive)
   (let ((proc (hugo-get-server-process)))
@@ -89,3 +100,5 @@
           (interrupt-process proc)
           (message "Stopped Hugo server"))
       (message "Hugo server is not running"))))
+
+(provide 'hugo)

@@ -106,7 +106,7 @@ values."
        deft-default-extension "org"
        deft-file-naming-rules '((nospace . "-"))
        )
-     hugo
+     (hugo :variables hugo-project-directory "~/blog")
      org2blog
      akirak-emacs
      (akirak-project-flow :variables
