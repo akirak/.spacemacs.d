@@ -5,13 +5,13 @@
 ;; options for org-clock
 (setq org-clock-history-length 23
       org-clock-in-resume t
-      org-drawers (quote ("PROPERTIES" "LOGBOOK"))
+      org-drawers '("PROPERTIES" "LOGBOOK")
       org-clock-into-drawer t
       org-clock-out-remove-zero-time-clocks t
       org-clock-out-when-done t
       org-clock-persist t
       org-clock-persist-query-resume nil
-      org-clock-auto-clock-resolution (quote when-no-clock-is-running)
+      org-clock-auto-clock-resolution 'when-no-clock-is-running
       org-clock-report-include-clocking-task t
       org-clock-in-switch-to-state #'akirak/clock-in-to-next
       )
