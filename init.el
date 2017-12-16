@@ -424,10 +424,10 @@ you should place your code here."
     (evil-write-all nil)
     (shell-command "systemctl suspend"))
 
-  ;; Make "~/.spacemacs.d/snippets" the default directory of new snippets
-  (let ((my-yas-snippet-dir (expand-file-name "~/.spacemacs.d/snippets")))
-    (setq yas-snippet-dirs
-          `(,my-yas-snippet-dir . ,(remove my-yas-snippet-dir yas-snippet-dirs))))
+  ;; Add my directory for snippets
+  (let ((my-yas-snippet-dir (expand-file-name "~/github/yasnippet-snippets")))
+    (when (file-exists-p my-yas-snippet-dir)
+      (add-to-list 'yas-snippet-dirs my-yas-snippet-dir)))
 
   (lexical-let*
       ((inbox-org-file "~/Dropbox/org/todo/Inbox.org")
